@@ -6,9 +6,8 @@ const app = express();
 var mongoose = require('mongoose');
 
 //PERSISTÊNCIA
-mongoose.connect('mongodb+srv://victor:victorpadovan1997@cluster0-waiml.mongodb.net/bd-teste20?retryWrites=true&w=28015', 
-{useNewUrlParser:true, useUnifiedTopology: true }
-);
+//mongoose.connect('mongodb://localhost/bdCrud', {useNewUrlParser:true});
+mongoose.connect('mongodb+srv://victorpadovan1997:majority@trabalhonavarro-1q870.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser:true});
 
 //Configuração do server para usar body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -18,17 +17,18 @@ app.use(bodyParser.json());
 var port = process.env.port || 3000;
 
 //ROTAS
-var indexRoute = require("./routes/index-routes");
+//var indexRoute = require("./src/routes/index-routes");
 var productRoute = require("./routes/product-routes");
+var vendedorRoute = require("./routes/vendedor-routes");
 
 //Vincular a aplicacao (app) com o motor de rotas
-//Rota geral (teste)
-app.use('/api', indexRoute);
+//app.use('/api', indexRoute);
 //Rotas para produtos
 app.use('/api/products', productRoute);
+app.use('/api/vendedor', vendedorRoute);
 
 app.listen(port, () => {
-    console.log('Server up and running!');
+    console.log('Done !');
 
 });
 

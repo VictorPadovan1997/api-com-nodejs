@@ -4,9 +4,10 @@ var Schema = mongoose.Schema;
 var productSchema = new Schema({
     nome:{type:String, required : true},
     preco:Number,
-    descricao:String
+    descricao:String,
+    vendedor:{type:Schema.Types.ObjectId, ref:"Vendedor", required: true}
 
 });
 
-module.exports = mongoose.model("Produto", productSchema);
+module.exports = mongoose.model('Produto', productSchema);
 

@@ -9,10 +9,11 @@ router.post("/", function (req, res) {
     produto.nome = req.body.nome;
     produto.preco = req.body.preco;
     produto.descricao = req.body.descricao;
+    produto.vendedor = req.body.vendedor;
 
     produto.save(function (error) {
         if (error)
-            res.send("Erro ao tentar salvar um produto" + error);
+            res.send("Erro ao tentar salvar " + error);
 
         res.status(201).json({ message: 'Produto inserido com sucesso' });
 
@@ -27,7 +28,7 @@ router.get("/", function (req, res) {
             res.send(err);
 
         res.status(200).json({
-            message: 'Produtos retornados',
+            message: 'Retorno requisição API',
             produtos: prods
         });
     });
