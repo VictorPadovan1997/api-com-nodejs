@@ -1,13 +1,12 @@
-// import express from 'express';
-// import bodyParser from 'body-parser';
 var express = require ('express');
 var bodyParser = require('body-parser');
 const app = express();
 var mongoose = require('mongoose');
 
-//PERSISTÊNCIA
-//mongoose.connect('mongodb://localhost/bdCrud', {useNewUrlParser:true});
-mongoose.connect('mongodb+srv://victorpadovan1997:majority@trabalhonavarro-1q870.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser:true});
+//Connection String
+mongoose.connect('mongodb+srv://victorpadovan1997:majority@trabalhonavarro-1q870.mongodb.net/test?retryWrites=true&w=majority',
+{useNewUrlParser:true, useUnifiedTopology: true }
+);
 
 //Configuração do server para usar body-parser
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,18 +16,17 @@ app.use(bodyParser.json());
 var port = process.env.port || 3000;
 
 //ROTAS
-//var indexRoute = require("./src/routes/index-routes");
-var productRoute = require("./routes/product-routes");
-var vendedorRoute = require("./routes/vendedor-routes");
+var indexRoute = require("./src/routes/index-routes");
+var productRoute = require("./src/routes/product-routes");
+var vendedorRoute = require("./src/routes/vendedor-routes");
 
-//Vincular a aplicacao (app) com o motor de rotas
-//app.use('/api', indexRoute);
-//Rotas para produtos
+
+app.use('/api', indexRoute);
 app.use('/api/products', productRoute);
 app.use('/api/vendedor', vendedorRoute);
 
 app.listen(port, () => {
-    console.log('Done !');
+    console.log('Server up and running!');
 
 });
 
