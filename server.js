@@ -18,12 +18,13 @@ var port = process.env.port || 3000;
 //ROTAS
 var indexRoute = require("./src/routes/index-routes");
 var productRoute = require("./src/routes/product-routes");
-var vendedorRoute = require("./src/routes/vendedor-routes");
+var userRoute = require("./src/routes/user-routes");
+
 
 
 app.use('/api', indexRoute);
 app.use('/api/products', productRoute);
-app.use('/api/vendedor', vendedorRoute);
+app.use('/api/user', userRoute);
 
 app.listen(port, () => {
     console.log('Server up and running!');

@@ -1,3 +1,4 @@
+//Repository Refatoração Para seguir padrões de projetos
 var Produto = require('../app/models/product');
 var mongoose = require('mongoose');
 

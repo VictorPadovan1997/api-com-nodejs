@@ -1,13 +1,14 @@
-const Vendedor = require('../app/models/vendedor');
-const repository = require('../repositories/vendedor-repository')
+const User = require('../app/models/user');
+const repository = require('../repositories/user-repository');
 
 exports.post = async (req, res) => {
     try {
         await repository.post({
-            nome: req.body.nome,
+            email: req.body.nome,
+            senha: req.body.senha,
         });
         res.status(201).send({
-            message: 'Vendedor cadastrado com sucesso!'
+            message: 'User cadastrado com sucesso!'
         });
     } catch (e) {
         res.status(500).send({
@@ -18,9 +19,15 @@ exports.post = async (req, res) => {
 
 exports.getAll = async (req, res) => {
 
-    try {
+     try {
         var data = await repository.get();
-        res.status(200).send(data);
+        var  quantidade = await User.count({});
+        res.status(200).send({
+            message: "Retorno de User e Quantidade",
+            quntidadeUser: quantidade,
+            data: data
+        });
+
     } catch (error) {
         res.status(500).send({
             message: "Falha ao processar requisição",
@@ -31,7 +38,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
     try {
-        const id = req.params.vendedorId;
+        const id = req.params.userId;
         var data = await repository.getById(id);
         res.status(200).send(data);
     } catch (error) {
@@ -44,10 +51,10 @@ exports.getById = async (req, res) => {
 
 exports.put = async (req, res) => {
     try {
-        const id = req.params.vendedorId;
+        const id = req.params.userId;
         var data = await repository.put(id, req.body);
         res.status(200).send({
-            message: "Vendedor atualizado com sucesso",
+            message: "user atualizado com sucesso",
             dados: data
         });
 
@@ -64,7 +71,7 @@ exports.put = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        const id = req.params.vendedorId;
+        const id = req.params.userId;
         await repository.delete(id)
         res.status(200).send({
             message: 'Vendedor removido com sucesso!'
@@ -76,7 +83,22 @@ exports.delete = async (req, res) => {
     }
 };
 
+exports.login = async (req, res) => {
+    try {
+        const email = req.params.email;
+        const password = req.params.password;
+        var data = await repository.validatePassword(email, password);
+        if (data){
+            res.status(200).send("logou");
+        } else {
 
-
-
-
+            res.status(401).send("login invalido");
+        }
+        res.status(200).send(data);
+    } catch (error) {
+        res.status(500).send({
+            message: "Falha ao processar requisição",
+            erro: error
+        });
+    }
+}
