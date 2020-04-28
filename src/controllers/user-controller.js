@@ -4,7 +4,8 @@ const repository = require('../repositories/user-repository');
 exports.post = async (req, res) => {
     try {
         await repository.post({
-            email: req.body.nome,
+            login: req.body.login,
+            email: req.body.email,
             senha: req.body.senha,
         });
         res.status(201).send({
@@ -18,7 +19,6 @@ exports.post = async (req, res) => {
 }
 
 exports.getAll = async (req, res) => {
-
      try {
         var data = await repository.get();
         var  quantidade = await User.count({});
@@ -67,14 +67,12 @@ exports.put = async (req, res) => {
 
 }
 
-
-
 exports.delete = async (req, res) => {
     try {
         const id = req.params.userId;
         await repository.delete(id)
         res.status(200).send({
-            message: 'Vendedor removido com sucesso!'
+            message: 'removido com sucesso!'
         });
     } catch (e) {
         res.status(500).send({
@@ -85,19 +83,20 @@ exports.delete = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
-        const email = req.params.email;
-        const password = req.params.password;
-        var data = await repository.validatePassword(email, password);
+        const login = req.body.login;
+        const senha = req.body.senha;
+        var data = await repository.validatePassword(login, senha);
+
         if (data){
-            res.status(200).send("logou");
+            res.status(200).send("LOGIN REALIZADO");
         } else {
 
-            res.status(401).send("login invalido");
+            res.status(401).send("USUARIO OU SENHA INVALIDOS");
         }
         res.status(200).send(data);
     } catch (error) {
         res.status(500).send({
-            message: "Falha ao processar requisição",
+            message: "Falha 500",
             erro: error
         });
     }

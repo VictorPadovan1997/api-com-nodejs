@@ -16,6 +16,7 @@ exports.getById = async (id) => {
 exports.put = async (id, data) => {
     await User.findByIdAndUpdate(id, {
         $set: {
+            login: data.login,
             email: data.email,
             senha: data.senha,
 
@@ -32,7 +33,8 @@ exports.delete = async (id) => {
     await User.findOneAndRemove(id);
 }
 
-exports.validatePassword = async (email, password) => {
-    const res = await User.findById({email: email, password: password});
+exports.validatePassword = async (login, senha) => {
+    const res = await User.findOne({login: login, senha: senha});
+    
     return res;
 }
