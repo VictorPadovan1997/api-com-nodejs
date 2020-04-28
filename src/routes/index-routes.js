@@ -22,10 +22,6 @@ router.use('/user/:id', function(req, res, next) {
 });
 
 
-
-
-
-
 router.get('/', (req, res) => res.json({message:'Tudo certo aqui com as Rotas'}));
 
 module.exports = router;

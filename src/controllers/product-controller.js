@@ -71,7 +71,6 @@ exports.put = async (req, res) => {
 }
 
 
-
 exports.delete = async (req, res) => {
     try {
         const id = req.params.productId;
