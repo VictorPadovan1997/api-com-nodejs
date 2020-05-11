@@ -83,21 +83,13 @@ exports.delete = async (req, res) => {
 
 exports.login = async (req, res) => {
     try {
-        const login = req.body.login;
-        const senha = req.body.senha;
-        var data = await repository.validatePassword(login, senha);
-
-        if (data){
-            res.status(200).send("LOGIN REALIZADO");
+        const result = await userRepository.login(req.body.login, req.body.senha);
+        res.status(200).send({auth: true, token: result});
+    } catch (e) {
+        if(!e.status){
+            res.status(500).json({error: {code: 'Erro', message: 'Erro ao acessar'}});
         } else {
-
-            res.status(401).send("USUARIO OU SENHA INVALIDOS");
+            res.status(e.status).json({error: {code:e.code, message:e.message}});
         }
-        res.status(200).send(data);
-    } catch (error) {
-        res.status(500).send({
-            message: "Falha 500",
-            erro: error
-        });
     }
 }

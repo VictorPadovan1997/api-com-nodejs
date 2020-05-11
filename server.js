@@ -19,9 +19,10 @@ var port = process.env.port || 3000;
 var indexRoute = require("./src/routes/index-routes");
 var productRoute = require("./src/routes/product-routes");
 var userRoute = require("./src/routes/user-routes");
+const loginRoute = require(".src/routes/login-route");
 
 
-
+app.use('/api/login', loginRoute);
 app.use('/api', indexRoute);
 app.use('/api/products', productRoute);
 app.use('/api/user', userRoute);

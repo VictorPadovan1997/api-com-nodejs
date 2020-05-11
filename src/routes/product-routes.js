@@ -1,20 +1,11 @@
-const express = require('express')
-var router = express.Router(); //interceptação das rotas
-const productController = require('../controllers/product-controller')
+const express = require('express');
+const router = express.Router(); //interceptação das rotas
+//const Produto = require("../app/models/product");
+const productController = require('../controllers/product-controller');
+const autorizacao = require('../services/auth-service')
 
-//Post
 router.post("/", productController.post);
-
-//Get All
-router.get("/", productController.getAll);
-
-//FindById
+router.get("/", autorizacao.authorize,  productController.getAll);
 router.get("/:productId", productController.getById);
-
-//PUT
-router.put("/:productId", productController.put);
-
-//DELETE
-router.delete("/:productId", productController.delete);
-
-module.exports = router;
+router.put("/:productId", productController.put)
+router.delete('/:productId', productController.delete);
